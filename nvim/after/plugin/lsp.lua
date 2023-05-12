@@ -10,13 +10,13 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
   ["<C-Space>"] = cmp.mapping.complete(),
 })
 
+cmp_mappings['<Tab>'] = nil
+
 lsp.setup_nvim_cmp({
   mapping = cmp_mappings
 })
 
-lsp.on_attach(function(client, bufnr)
-  local opts = {buffer = bufnr, remap = false}
-
+lsp.on_attach(function(client, bufnr) local opts = {buffer = bufnr, remap = false}
   --if client.name == "eslint" then
   --    vim.cmd.LspStop('eslint')
   --    return

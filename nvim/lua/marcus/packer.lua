@@ -49,6 +49,8 @@ return require('packer').startup(function(use)
     use('jose-elias-alvarez/null-ls.nvim')
     use('MunifTanjim/prettier.nvim')
     use 'manzeloth/live-server'
+    --use('zbirenbaum/copilot.lua')
+    use('github/copilot.vim')
 
 	if packer_bootstrap then
 		require('packer').sync()
