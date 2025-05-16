@@ -88,10 +88,10 @@ alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-alt-h = 'focus left'
-alt-j = 'focus down'
-alt-k = 'focus up'
-alt-l = 'focus right'
+alt-h = 'focus left --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+alt-j = 'focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+alt-k = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+alt-l = 'focus right --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-shift-h = 'move left'
@@ -178,8 +178,3 @@ run  = 'move-node-to-workspace 7'
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run  = 'move-node-to-workspace 8'
-
-# https://github.com/nikitabobko/AeroSpace/issues/340
-[[on-window-detected]]
-if.app-id = 'com.brave.Browser'
-run = 'layout tiling'
