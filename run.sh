@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-macos=("aerospace" "kitty" "nvim" "tmux")
+macos=("aerospace" "ghostty" "nvim" "tmux")
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   for pkg in "${macos[@]}"; do

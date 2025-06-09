@@ -17,13 +17,32 @@ return {
 			keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
 			keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-			keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-			keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
+			keymap.set("n", "[d", function()
+				vim.diagnostic.jump({ count = 1 })
+			end, opts)
+			keymap.set("n", "]d", function()
+				vim.diagnostic.jump({ count = -1 })
+			end, opts)
 			keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
 			keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
 			keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
 			keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 		end
+
+		vim.api.nvim_create_autocmd("LspAttach", {
+			group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
+			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				if client == nil then
+					return
+				end
+				if client.name == "ruff" then
+					-- Disable hover in favor of Pyright
+					client.server_capabilities.hoverProvider = false
+				end
+			end,
+			desc = "LSP: Disable hover capability from Ruff",
+		})
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = vim.tbl_deep_extend(
@@ -93,6 +112,20 @@ return {
 		})
 
 		lspconfig["pyright"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			pyright = {
+				-- Using Ruff's import organizer
+				disableOrganizeImports = true,
+			},
+			python = {
+				analysis = {
+					-- Ignore all files for analysis to exclusively use Ruff for linting
+					ignore = { "*" },
+				},
+			},
+		})
+		lspconfig["ruff"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})

@@ -18,7 +18,11 @@ return {
 				yaml = { "prettier" },
 				markdown = { "prettier" },
 				graphql = { "prettier" },
-				python = { "isort", "black" },
+				python = {
+					"ruff_fix",
+					"ruff_format",
+					"ruff_organize_imports",
+				},
 				c = { "clang_format" },
 				go = { "gofumpt" },
 				templ = function(buf)
