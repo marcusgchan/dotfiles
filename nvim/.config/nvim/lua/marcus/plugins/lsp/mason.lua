@@ -35,7 +35,7 @@ return {
 				"pyright",
 				"cmake",
 			},
-			automatic_installation = true,
+			automatic_installation = false,
 		})
 
 		-- masonLspConfig.setup_handlers({
