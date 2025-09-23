@@ -168,6 +168,13 @@ return {
 			end,
 		})
 
+		lspconfig["jdtls"].setup({
+			capabilities = capabilities,
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+			end,
+		})
+
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,

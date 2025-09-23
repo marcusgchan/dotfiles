@@ -27,6 +27,7 @@ return {
 				"markdown",
 				"markdown_inline",
 				"hcl",
+				"java",
 			},
 			sync_install = false,
 			highlight = { enable = true },
