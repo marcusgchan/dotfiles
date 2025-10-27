@@ -5,12 +5,11 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
 
 		local opts = { noremap = true }
-		local on_attach = function(client, bufnr)
+		local global_on_attach = function(client, bufnr)
 			opts.buffer = bufnr
 
 			keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -47,7 +46,7 @@ return {
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = vim.tbl_deep_extend(
 			"force",
-			lspconfig.util.default_config.capabilities,
+			vim.lsp.protocol.make_client_capabilities(),
 			cmp_nvim_lsp.default_capabilities(),
 			{
 				workspace = {
@@ -58,23 +57,30 @@ return {
 			}
 		)
 
-		lspconfig["html"].setup({
+		-- Global LSP configuration
+		vim.lsp.config('*', {
+			on_attach = global_on_attach,
 			capabilities = capabilities,
-			on_attach = on_attach,
+		})
+
+		-- HTML LSP
+		vim.lsp.config('html', {
 			filetypes = { "html", "templ" },
 		})
+		vim.lsp.enable('html')
 
-		lspconfig["ts_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		-- TypeScript LSP
+		vim.lsp.config('ts_ls', {})
+		vim.lsp.enable('ts_ls')
 
-		-- configure svelte server
-		-- https://github.com/sveltejs/language-tools/issues/2008
-		lspconfig["svelte"].setup({
-			capabilities = capabilities,
+		-- Svelte LSP
+		vim.lsp.config('svelte', {
 			on_attach = function(client, bufnr)
-				on_attach(client, bufnr)
+				-- run the existing default (if set)
+				local prev = (vim.lsp.config['svelte'] or {}).on_attach
+				if prev then
+					prev(client, bufnr)
+				end
 
 				vim.api.nvim_create_autocmd("BufWritePost", {
 					pattern = { "*.js", "*.ts" },
@@ -84,15 +90,14 @@ return {
 				})
 			end,
 		})
+		vim.lsp.enable('svelte')
 
-		lspconfig["cssls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		-- CSS LSP
+		vim.lsp.config('cssls', {})
+		vim.lsp.enable('cssls')
 
-		lspconfig["tailwindcss"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		-- Tailwind CSS LSP
+		vim.lsp.config('tailwindcss', {
 			filetypes = {
 				"html",
 				"css",
@@ -105,15 +110,14 @@ return {
 			},
 			init_options = { userLanguages = { templ = "html" } },
 		})
+		vim.lsp.enable('tailwindcss')
 
-		lspconfig["prismals"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		-- Prisma LSP
+		vim.lsp.config('prismals', {})
+		vim.lsp.enable('prismals')
 
-		lspconfig["pyright"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		-- Pyright LSP
+		vim.lsp.config('pyright', {
 			pyright = {
 				-- Using Ruff's import organizer
 				disableOrganizeImports = true,
@@ -125,24 +129,22 @@ return {
 				},
 			},
 		})
-		lspconfig["ruff"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		vim.lsp.enable('pyright')
 
-		lspconfig["clangd"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		-- Ruff LSP
+		vim.lsp.config('ruff', {})
+		vim.lsp.enable('ruff')
 
-		lspconfig["cmake"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		-- Clangd LSP
+		vim.lsp.config('clangd', {})
+		vim.lsp.enable('clangd')
 
-		lspconfig["gopls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		-- CMake LSP
+		vim.lsp.config('cmake', {})
+		vim.lsp.enable('cmake')
+
+		-- Go LSP
+		vim.lsp.config('gopls', {
 			settings = {
 				gopls = {
 					analyses = {
@@ -153,31 +155,22 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable('gopls')
 
-		lspconfig["templ"].setup({
-			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				on_attach(client, bufnr)
-			end,
-		})
+		-- Templ LSP
+		vim.lsp.config('templ', {})
+		vim.lsp.enable('templ')
 
-		lspconfig["luau_lsp"].setup({
-			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				on_attach(client, bufnr)
-			end,
-		})
+		-- Luau LSP
+		vim.lsp.config('luau_lsp', {})
+		vim.lsp.enable('luau_lsp')
 
-		lspconfig["jdtls"].setup({
-			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				on_attach(client, bufnr)
-			end,
-		})
+		-- Java LSP
+		vim.lsp.config('jdtls', {})
+		vim.lsp.enable('jdtls')
 
-		lspconfig["lua_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		-- Lua LSP
+		vim.lsp.config('lua_ls', {
 			settings = { -- custom settings for lua
 				Lua = {
 					-- make the language server recognize "vim" global
@@ -194,5 +187,6 @@ return {
 				},
 			},
 		})
+		vim.lsp.enable('lua_ls')
 	end,
 }
