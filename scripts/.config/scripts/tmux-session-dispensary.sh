@@ -8,7 +8,7 @@ DIRS=(
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find . "${DIRS[@]}" -type d -maxdepth 1 \
+    selected=$(find . "${DIRS[@]}" -maxdepth 1 -type d \
         | sed "s|^$HOME/||" \
         | fzf --margin=10% --color=bw)
 
