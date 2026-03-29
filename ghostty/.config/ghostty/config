@@ -1,2 +1,12 @@
 font-size=16
-theme=catppuccin-frappe
+theme = Catppuccin Frappe
+background-opacity = 0.85
+background-blur-radius = 20
+
+cursor-invert-fg-bg = true
+cursor-color = #ffffff
+
+shell-integration-features = no-cursor
+cursor-style = block
+cursor-style-blink = false
+

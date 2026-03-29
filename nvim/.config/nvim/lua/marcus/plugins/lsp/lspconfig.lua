@@ -58,46 +58,30 @@ return {
 		)
 
 		-- Global LSP configuration
-		vim.lsp.config('*', {
+		vim.lsp.config("*", {
 			on_attach = global_on_attach,
 			capabilities = capabilities,
 		})
 
 		-- HTML LSP
-		vim.lsp.config('html', {
+		vim.lsp.config("html", {
 			filetypes = { "html", "templ" },
 		})
-		vim.lsp.enable('html')
+		vim.lsp.enable("html")
 
 		-- TypeScript LSP
-		vim.lsp.config('ts_ls', {})
-		vim.lsp.enable('ts_ls')
+		vim.lsp.config("ts_ls", {})
+		vim.lsp.enable("ts_ls")
 
 		-- Svelte LSP
-		vim.lsp.config('svelte', {
-			on_attach = function(client, bufnr)
-				-- run the existing default (if set)
-				local prev = (vim.lsp.config['svelte'] or {}).on_attach
-				if prev then
-					prev(client, bufnr)
-				end
-
-				vim.api.nvim_create_autocmd("BufWritePost", {
-					pattern = { "*.js", "*.ts" },
-					callback = function(ctx)
-						client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-					end,
-				})
-			end,
-		})
-		vim.lsp.enable('svelte')
+		vim.lsp.enable("svelte")
 
 		-- CSS LSP
-		vim.lsp.config('cssls', {})
-		vim.lsp.enable('cssls')
+		vim.lsp.config("cssls", {})
+		vim.lsp.enable("cssls")
 
 		-- Tailwind CSS LSP
-		vim.lsp.config('tailwindcss', {
+		vim.lsp.config("tailwindcss", {
 			filetypes = {
 				"html",
 				"css",
@@ -110,14 +94,14 @@ return {
 			},
 			init_options = { userLanguages = { templ = "html" } },
 		})
-		vim.lsp.enable('tailwindcss')
+		vim.lsp.enable("tailwindcss")
 
 		-- Prisma LSP
-		vim.lsp.config('prismals', {})
-		vim.lsp.enable('prismals')
+		vim.lsp.config("prismals", {})
+		vim.lsp.enable("prismals")
 
 		-- Pyright LSP
-		vim.lsp.config('pyright', {
+		vim.lsp.config("pyright", {
 			pyright = {
 				-- Using Ruff's import organizer
 				disableOrganizeImports = true,
@@ -129,22 +113,22 @@ return {
 				},
 			},
 		})
-		vim.lsp.enable('pyright')
+		vim.lsp.enable("pyright")
 
 		-- Ruff LSP
-		vim.lsp.config('ruff', {})
-		vim.lsp.enable('ruff')
+		vim.lsp.config("ruff", {})
+		vim.lsp.enable("ruff")
 
 		-- Clangd LSP
-		vim.lsp.config('clangd', {})
-		vim.lsp.enable('clangd')
+		vim.lsp.config("clangd", {})
+		vim.lsp.enable("clangd")
 
 		-- CMake LSP
-		vim.lsp.config('cmake', {})
-		vim.lsp.enable('cmake')
+		vim.lsp.config("cmake", {})
+		vim.lsp.enable("cmake")
 
 		-- Go LSP
-		vim.lsp.config('gopls', {
+		vim.lsp.config("gopls", {
 			settings = {
 				gopls = {
 					analyses = {
@@ -155,22 +139,22 @@ return {
 				},
 			},
 		})
-		vim.lsp.enable('gopls')
+		vim.lsp.enable("gopls")
 
 		-- Templ LSP
-		vim.lsp.config('templ', {})
-		vim.lsp.enable('templ')
+		vim.lsp.config("templ", {})
+		vim.lsp.enable("templ")
 
 		-- Luau LSP
-		vim.lsp.config('luau_lsp', {})
-		vim.lsp.enable('luau_lsp')
+		vim.lsp.config("luau_lsp", {})
+		vim.lsp.enable("luau_lsp")
 
 		-- Java LSP
-		vim.lsp.config('jdtls', {})
-		vim.lsp.enable('jdtls')
+		vim.lsp.config("jdtls", {})
+		vim.lsp.enable("jdtls")
 
 		-- Lua LSP
-		vim.lsp.config('lua_ls', {
+		vim.lsp.config("lua_ls", {
 			settings = { -- custom settings for lua
 				Lua = {
 					-- make the language server recognize "vim" global
@@ -187,6 +171,6 @@ return {
 				},
 			},
 		})
-		vim.lsp.enable('lua_ls')
+		vim.lsp.enable("lua_ls")
 	end,
 }
