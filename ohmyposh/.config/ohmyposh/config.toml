@@ -74,6 +74,18 @@ final_space = true
       branch_icon = ""
 
 [[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'text'
+    style = 'plain'
+    template = '>'
+    foreground = 'p:mauve'
+    background = 'transparent'
+
+[[blocks]]
   type = 'rprompt'
 
   [[blocks.segments]]
