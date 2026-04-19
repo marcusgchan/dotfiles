@@ -73,6 +73,18 @@ final_space = true
       fetch_upstream_icon = false
       branch_icon = ""
 
+  [[blocks.segments]]
+    type = 'python'
+    style = 'powerline'
+    template = '{{ if .Venv }}{{ .Venv }}{{ else }}{{ .Full }}{{ end }}'
+    foreground = 'p:black'
+    background = 'p:green'
+    powerline_symbol = ''
+
+    [blocks.segments.options]
+      display_mode = 'always'
+      folder_name_fallback = false
+
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
