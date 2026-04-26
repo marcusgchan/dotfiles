@@ -82,7 +82,7 @@ final_space = true
     powerline_symbol = ''
 
     [blocks.segments.options]
-      display_mode = 'always'
+      display_mode = 'virtualenv'
       folder_name_fallback = false
 
 [[blocks]]
