@@ -29,6 +29,7 @@ return {
 				"clangd", -- clangd (same name)
 				"pyright", -- pyright (same name)
 				"cmake-language-server", -- cmake
+				"tree-sitter-cli",
 			},
 		})
 	end,
