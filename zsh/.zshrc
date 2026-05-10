@@ -80,4 +80,5 @@ eval "$(fnm env --use-on-cd --shell zsh)"
 
 eval "$(direnv hook zsh)"
 
+export FZF_DEFAULT_OPTS="--bind='ctrl-y:accept' $FZF_DEFAULT_OPTS"
 eval "$(fzf --zsh)"
