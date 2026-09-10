@@ -153,6 +153,9 @@ return {
 		vim.lsp.config("jdtls", {})
 		vim.lsp.enable("jdtls")
 
+		vim.lsp.config("eslint", {})
+		vim.lsp.enable("eslint")
+
 		-- Lua LSP
 		vim.lsp.config("lua_ls", {
 			settings = { -- custom settings for lua
