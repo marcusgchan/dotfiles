@@ -6,6 +6,16 @@ source "${ZINIT_HOME}/zinit.zsh"
 
 eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/config.toml)"
 
+# oh-my-posh remembers the config path only in a per-session cache file and
+# prunes those for long-lived/idle shells. When that happens the prompt silently
+# falls back to its default (orange) theme. Re-init from precmd if it goes missing.
+autoload -Uz add-zsh-hook
+_omp_reinit_if_lost() {
+  [[ -f "$HOME/.cache/oh-my-posh/zsh.${POSH_SESSION_ID}.omp.cache" ]] ||
+    eval "$(oh-my-posh init zsh --config "$HOME/.config/ohmyposh/config.toml")"
+}
+add-zsh-hook precmd _omp_reinit_if_lost
+
 # === Plugins ===
 zinit light zsh-users/zsh-syntax-highlighting
 
@@ -82,3 +92,4 @@ eval "$(direnv hook zsh)"
 
 export FZF_DEFAULT_OPTS="--bind='ctrl-y:accept' $FZF_DEFAULT_OPTS"
 eval "$(fzf --zsh)"
+export PATH="$HOME/.local/bin:$PATH"
