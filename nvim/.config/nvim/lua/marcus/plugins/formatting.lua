@@ -30,9 +30,12 @@ return {
 					return { "templ" }
 				end,
 			},
-			format_on_save = {
-				lsp_fallback = true,
-			},
+			format_on_save = function(bufnr)
+				-- if vim.tbl_contains({ "c", "cpp" }, vim.bo[bufnr].filetype) then
+				-- 	return
+				-- end
+				return { lsp_fallback = true }
+			end,
 		})
 
 		vim.keymap.set({ "n", "v" }, "<leader>fd", function()

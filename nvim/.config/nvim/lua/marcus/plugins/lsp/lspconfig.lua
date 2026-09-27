@@ -35,6 +35,13 @@ return {
 				if client == nil then
 					return
 				end
+
+				-- Run unconditionally: some servers (e.g. clangd) ship their own
+				-- on_attach in nvim-lspconfig's bundled config, which shadows the
+				-- on_attach set via vim.lsp.config("*", ...) instead of composing
+				-- with it. Setting keymaps here guarantees they're always applied.
+				global_on_attach(client, args.buf)
+
 				if client.name == "ruff" then
 					-- Disable hover in favor of Pyright
 					client.server_capabilities.hoverProvider = false
@@ -59,7 +66,6 @@ return {
 
 		-- Global LSP configuration
 		vim.lsp.config("*", {
-			on_attach = global_on_attach,
 			capabilities = capabilities,
 		})
 
